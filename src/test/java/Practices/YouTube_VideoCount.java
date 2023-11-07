@@ -59,13 +59,13 @@ public class YouTube_VideoCount extends BaseDriver {
             count2++;
         }
         int totalVideoCount = count1 + count2;
+        wait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.xpath("//a[@id='video-title']"), totalVideoCount));
         if (totalVideoCount > 80) {
             System.out.println("Count1: " + count1);
             System.out.println("Count2: " + count2);
             System.out.println("Total Video Count: " + totalVideoCount);
             System.out.println("At least 80 Selenium videos Counted.");
             System.out.println("Last Link : " + lastLink);
-            wait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.xpath("//a[@id='video-title']"), totalVideoCount));
         } else {
             System.out.println("Less than 80 videos are displayed.");
         }
