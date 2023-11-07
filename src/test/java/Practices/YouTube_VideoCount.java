@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -36,25 +37,19 @@ public class YouTube_VideoCount extends BaseDriver {
                 "//a[@class='yt-simple-endpoint style-scope ytd-playlist-renderer']"));
         wait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.xpath(
                 "//a[@class='yt-simple-endpoint style-scope ytd-playlist-renderer']"), 80));
+
         int count1 = 0;
         for (WebElement e : links) {
             count1++;
         }
-        MyMethods.myWait(5);
-        js.executeScript("window.scrollTo(0, 3000)");
-        MyMethods.myWait(5);
-        js.executeScript("window.scrollTo(3000, 6000)");
-        MyMethods.myWait(5);
-        js.executeScript("window.scrollTo(6000, 9000)");
-        MyMethods.myWait(5);
-        js.executeScript("window.scrollTo(9000, 12000)");
-        MyMethods.myWait(5);
-        js.executeScript("window.scrollTo(12000, 15000)");
-        MyMethods.myWait(5);
-        js.executeScript("window.scrollTo(15000, 18000)");
-        MyMethods.myWait(5);
-        js.executeScript("window.scrollTo(18000, 21000)");
-        MyMethods.myWait(5);
+
+        MyMethods.myWait(2);
+        for (int i = 0; i < 7; i++) {
+            int start = i * 3000;
+            int end = (i + 1) * 3000;
+            js.executeScript("window.scrollTo(" + start + ", " + end + ")");
+            MyMethods.myWait(2);
+        }
 
         List<WebElement> links2 = driver.findElements(By.xpath("//a[@id='video-title']"));
         int count2 = 0;
@@ -63,12 +58,12 @@ public class YouTube_VideoCount extends BaseDriver {
             lastLink = e.getAttribute("href");
             count2++;
         }
-
         int totalVideoCount = count1 + count2;
         if (totalVideoCount > 80) {
             System.out.println("Count1: " + count1);
             System.out.println("Count2: " + count2);
             System.out.println("Total Video Count: " + totalVideoCount);
+            System.out.println("At least 80 Selenium videos Counted.");
             System.out.println("Last Link : " + lastLink);
             wait.until(ExpectedConditions.numberOfElementsToBeLessThan(By.xpath("//a[@id='video-title']"), totalVideoCount));
         } else {
